@@ -28,6 +28,7 @@ class Connexion extends CI_Controller{
                 'currently_logged_in' => 1
             );
             $this->session->set_userdata($data);
+            $this->verificationConnexion();
             redirect('index.php/Connexion/verificationConnexion');
         }
         else {
