@@ -4,13 +4,10 @@
     <title></title>
 </head>
 <body>
-<h1>Bienvenue, Vous êtes connecté.</h1>
-
-<?php
-echo "<pre>";
-echo print_r($this->session->all_userdata());
-echo "</pre>";
-?>
+    <?php
+    include  'interface/vHeader.php';
+    include 'interface/vNavigation.php';
+    ?>
 
 <a href='<?php echo base_url() . "index.php/Connexion/deconnexion"; ?>'>Déconnexion</a>
 
