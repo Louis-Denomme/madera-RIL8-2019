@@ -40,12 +40,12 @@ class ADMINISTRATOR_Controller extends CI_Controller {
                 set_cookie($cookies_password);
 
                 // Tout est ok, ont redirige vers la page d'accueil de l'admin
-                redirect(site_url("admin/index"));
+                redirect(site_url("interface/index"));
             }
             else
             {
                 // Mauvais identifiant, ont redirige vers la page de connexion
-                redirect(site_url("admin/connexion"));
+                redirect(site_url("interface/connexion"));
             }
         }
         elseif (get_cookie($this->config->item('cookie_prefix').$this->_cookie_id_name, TRUE) &&
@@ -54,11 +54,11 @@ class ADMINISTRATOR_Controller extends CI_Controller {
             $mail = $this->encrypt->decode(get_cookie($this->config->item('cookie_prefix').$this->_cookie_id_name));
             $password = $this->encrypt->decode(get_cookie($this->config->item('cookie_prefix').$this->_cookie_id_password));
             if ($this->administrator_model->validate($mail, $password) == FALSE)
-                redirect(site_url("admin/connexion")); // Mauvais identifiant, ont redirige vers la page de connexion
+                redirect(site_url("interface/connexion")); // Mauvais identifiant, ont redirige vers la page de connexion
         }
         elseif ($this->router->fetch_class() != "connexion")
         {
-            redirect(site_url("admin/connexion")); // Mauvais identifiant, ont redirige vers la page de connexion
+            redirect(site_url("interface/connexion")); // Mauvais identifiant, ont redirige vers la page de connexion
         }
     }
 }
