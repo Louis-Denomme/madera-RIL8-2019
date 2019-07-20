@@ -39,11 +39,37 @@ html, body{
 
 #corps{
     width: calc(100% - 100px);
-    background-color: red;
+    background-color: white;
+    font-size: 0;
 }
 
 .navBloc{
     height: 100px;
     width: 100px;
     background-color: white;
+}
+
+.homeBloc{
+    display: inline-flex;
+    align-items: center;
+    /* background-color: red; */
+    width: 50%;
+    height: 50%;
+    padding: 20px;
+}
+
+#blocDevisAcceptes{
+    background-color: #7fba00;
+}
+
+#blocDevisEncours{
+    background-color: #f25022;
+}
+
+#blocDevisRefuses{
+    background-color: #00a4ef;
+}
+
+#blocNavigationRapide{
+    background-color: #ffb900;
 }

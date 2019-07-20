@@ -15,7 +15,15 @@
     <div id="myBody">
         <?php require 'interface/vNavigation.php'; ?>
         <div id="corps">
-
+            <div id="blocDevisEncours" class="homeBloc">
+                <div class="tableHeader">Mes devis en cours</div>
+                <?php foreach ($dicoDevisEnCours as $devis):
+                    echo $devis;
+                endforeach;?>
+            </div>
+            <div id="blocDevisAcceptes" class="homeBloc"></div>
+            <div id="blocDevisRefuses" class="homeBloc"></div>
+            <div id="blocNavigationRapide" class="homeBloc"></div>
         </div>
     </div>
 </body>
