@@ -39,7 +39,12 @@ class Connexion extends CI_Controller{
     {
         if ($this->session->userdata('currently_logged_in'))
         {
-            $this->load->view('vAccueil');
+            $dicoDevisEnCours = array("coucou","ccco");
+
+            $data = array(
+                'dicoDevisEnCours' => $dicoDevisEnCours,
+            );
+            $this->load->view('vAccueil', $data);
         } else {
             redirect('index.php/Connexion/erreurConnexion');
         }
