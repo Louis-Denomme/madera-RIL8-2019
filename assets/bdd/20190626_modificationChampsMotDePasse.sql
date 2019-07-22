@@ -1,0 +1,2 @@
+ALTER TABLE `user` CHANGE `username` `username` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'username';
+ALTER TABLE `user` CHANGE `username` `username` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'username', CHANGE `password` `password` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'encoded user password';

@@ -6,7 +6,7 @@
 <body>
 <h1>Connexion échouée</h1>
 
-<a href='<?php echo base_url()."Connexion/chargerVue"; ?>'>Réessayer</a>
+<a href='<?= base_url()."cConnection/loadView"; ?>'>Réessayer</a>
 
 </body>
 </html>
