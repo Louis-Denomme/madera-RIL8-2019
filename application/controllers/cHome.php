@@ -19,6 +19,11 @@ class cHome extends CI_Controller
 
     function loadView()
     {
+        $dicoDevisEnCours = array("coucou","ccco");
+
+        $data = array(
+            'dicoDevisEnCours' => $dicoDevisEnCours,
+        );
         $this->load->view("vHome");
     }
 

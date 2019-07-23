@@ -2,9 +2,14 @@
 <html>
 <head>
     <title>Madera - Accueil</title>
+    <!-- Balises obligatoires dans chaque vue-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/interface/Interface.css">
 </head>
+
 <body>
 <h1>Bienvenue, Vous êtes connecté.</h1>
 
@@ -14,25 +19,24 @@ echo print_r($this->session->userdata());
 echo "</pre>";
 ?>
 
-<a href='<?php echo base_url() . "index.php/cConnection/logout"; ?>'>
-    <button id="logoutSubmit" name="logoutSubmit" class="btn btn-secondary btn-lg">
 
-        Déconnexion
 
-    </button>
-</a>
 
-<a href='<?php echo base_url() . "index.php/cHome/loadCreateAccountView"; ?>'>
-    <button id="createAccountSubmit" name="createAccountSubmit" class="btn btn-primary btn-lg"
-        <?php if (!$this->CI->isAllowedToCreateAccount()) {
-            echo 'disabled';
-        } ?>>
-
-        Création de Compte
-
-    </button>
-</a>
-
+<div> <?php require  'interface/vHeader.php'; ?></div>
+<div id="myBody">
+    <?php require 'interface/vNavigation.php'; ?>
+    <div id="corps">
+        <div id="blocDevisEncours" class="homeBloc">
+            <div class="tableHeader">Mes devis en cours</div>
+            <?php foreach ($dicoDevisEnCours as $devis):
+                echo $devis;
+            endforeach;?>
+        </div>
+        <div id="blocDevisAcceptes" class="homeBloc"></div>
+        <div id="blocDevisRefuses" class="homeBloc"></div>
+        <div id="blocNavigationRapide" class="homeBloc"></div>
+    </div>
+</div>
 
 </body>
 </html>
