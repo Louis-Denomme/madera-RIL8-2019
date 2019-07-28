@@ -11,26 +11,15 @@
 </head>
 
 <body>
-<h1>Bienvenue, Vous êtes connecté.</h1>
-
-<?php
-echo "<pre>";
-echo print_r($this->session->userdata());
-echo "</pre>";
-?>
-
-
-
-
 <div> <?php require  'interface/vHeader.php'; ?></div>
 <div id="myBody">
     <?php require 'interface/vNavigation.php'; ?>
     <div id="corps">
         <div id="blocDevisEncours" class="homeBloc">
-            <div class="tableHeader">Mes devis en cours</div>
-            <?php foreach ($dicoDevisEnCours as $devis):
-                echo $devis;
-            endforeach;?>
+<!--            <div class="tableHeader">Mes devis en cours</div>-->
+<!--            --><?php //foreach ($dicoDevisEnCours as $devis):
+//                echo $devis;
+//            endforeach;?>
         </div>
         <div id="blocDevisAcceptes" class="homeBloc"></div>
         <div id="blocDevisRefuses" class="homeBloc"></div>
