@@ -1,15 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Connexion extends CI_Controller{
+class Connexion extends CI_Controller
+{
 
 
-    function index(){
-        $this->chargerVue();
-    }
-
-    function chargerVue(){
+    function index()
+    {
+        $this->load->view('parts/vHeader');
         $this->load->view('vConnexion');
+        $this->load->view('parts/vFooter');
     }
 
     // login action
@@ -21,29 +21,28 @@ class Connexion extends CI_Controller{
         $this->form_validation->set_rules('username', 'Username:', 'required|trim|xss_clean|callback_validation');
         $this->form_validation->set_rules('password', 'Password:', 'required|trim');
 
-        if ($this->form_validation->run())
-        {
-            $data = array(
+        if ($this->form_validation->run()) {
+            $data = [
                 'username' => $this->input->post('username'),
-                'currently_logged_in' => 1
-            );
+                'currently_logged_in' => true
+            ];
             $this->session->set_userdata($data);
             redirect('index.php/Connexion/verificationConnexion');
-        }
-        else {
+        } else {
+            $this->load->view('parts/vHeader');
             $this->load->view('vConnexion');
+            $this->load->view('parts/vFooter');
         }
     }
 
     public function verificationConnexion()
     {
-        if ($this->session->userdata('currently_logged_in'))
-        {
-            $dicoDevisEnCours = array("coucou","ccco");
+        if ($this->session->userdata('currently_logged_in')) {
+            $dicoDevisEnCours = array("coucou", "ccco");
 
-            $data = array(
+            $data = [
                 'dicoDevisEnCours' => $dicoDevisEnCours,
-            );
+            ];
             $this->load->view('vAccueil', $data);
         } else {
             redirect('index.php/Connexion/erreurConnexion');
@@ -61,9 +60,7 @@ class Connexion extends CI_Controller{
     {
         $this->load->model('mConnexion');
 
-        if ($this->mConnexion->utilisateurTrouve())
-        {
-
+        if ($this->mConnexion->utilisateurTrouve()) {
             return true;
         } else {
             $this->form_validation->set_message('validation', 'Identifiant ou mot de passe incorrect');
@@ -76,6 +73,4 @@ class Connexion extends CI_Controller{
         $this->session->sess_destroy();
         redirect('index.php/Connexion/chargerVue');
     }
-
 }
-?>
