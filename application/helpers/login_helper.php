@@ -8,7 +8,7 @@ if (!function_exists('checkLogin')) {
 
     $CI->load->library('session');
 
-    if (!$CI->session->userdata('currently_logged_in'))
+    if (!$CI->session->currently_logged_in)
       show_error('You must be connected to see this');
   }
 }
@@ -21,6 +21,6 @@ if (!function_exists('isLogedIn')) {
 
     $CI->load->library('session');
 
-    return $CI->session->userdata('currently_logged_in') ? true : false;
+    return $CI->session->currently_logged_in ? true : false;
   }
 }

@@ -37,7 +37,7 @@ class Connexion extends CI_Controller
 
     public function verificationConnexion()
     {
-        if ($this->session->userdata('currently_logged_in')) {
+        if ($this->session->currently_logged_in) {
             $dicoDevisEnCours = array("coucou", "ccco");
 
             $data = [
