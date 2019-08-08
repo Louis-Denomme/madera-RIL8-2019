@@ -12,6 +12,8 @@ class Devis extends CI_Controller
         if (!is_int($idDevis))
             show_error('ID incorrect ' . $idDevis);
 
+        //TODO
+
         $this->load->view('parts/vHeader');
 
         //TODO afficher page recap ?
@@ -21,6 +23,7 @@ class Devis extends CI_Controller
 
     function new()
     {
+        //checkLogin();
         $devis = $this->session->devis;
 
         if (is_null($devis))
@@ -34,6 +37,7 @@ class Devis extends CI_Controller
             $devis['idClient'] = $idClient;
         }
 
+        //TODO load les gammes depuis la bdd
         $data =
             [
                 'gammes' => [
@@ -48,11 +52,11 @@ class Devis extends CI_Controller
             redirect('index.php/Devis/config');
         } else if (!is_null($idGamme)) {
             $devis['idGamme'] = $idGamme;
+            //TODO load les modèles depuis la bdd
             $data['modeles'] = [
                 ['id' => 1, 'nom' => 'Modele 1'],
                 ['id' => 2, 'nom' => 'Modele 2']
             ];
-            $this->session->set_userdata('devis', ['idClient' => $idClient]);
         }
 
         $data['devis'] = $devis;
@@ -62,7 +66,24 @@ class Devis extends CI_Controller
         $this->load->view('parts/vHeader');
 
         $this->load->view(
-            'Devis/vDevisChoixGammeModele',
+            'Devis/vChoixGammeModele',
+            $data
+        );
+
+        $this->load->view('parts/vFooter');
+    }
+
+    function recap()
+    {
+        //checkLogin();
+        //TODO 
+
+        $data = [];
+
+        $this->load->view('parts/vHeader');
+
+        $this->load->view(
+            'Devis/vRecap',
             $data
         );
 
@@ -71,6 +92,7 @@ class Devis extends CI_Controller
 
     function config()
     {
+        //checkLogin();
         $devis = $this->session->devis;
 
         if (is_null($devis))
@@ -109,7 +131,7 @@ class Devis extends CI_Controller
         $this->load->view('parts/vHeader');
 
         $this->load->view(
-            'Devis/vDevisChoixModules',
+            'Devis/vChoixModules',
             $data
         );
 
@@ -118,6 +140,7 @@ class Devis extends CI_Controller
 
     function addModule()
     {
+        //checkLogin();
         $devis = $this->session->devis;
 
         if (is_null($devis))
@@ -146,6 +169,7 @@ class Devis extends CI_Controller
 
     function editModule()
     {
+        //checkLogin();
         $devis = $this->session->devis;
 
         if (is_null($devis))
@@ -175,6 +199,7 @@ class Devis extends CI_Controller
 
     function delModule()
     {
+        //checkLogin();
         $devis = $this->session->devis;
 
         $num = $this->input->get('num');
