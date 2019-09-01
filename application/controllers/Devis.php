@@ -38,13 +38,17 @@ class Devis extends CI_Controller
         }
 
         //TODO load les gammes depuis la bdd
+        $this->load->database();
+        $query = $this->db->get('gamme');
         $data =
             [
-                'gammes' => [
-                    ['id' => 1, 'nom' => 'GAMME 1'],
-                    ['id' => 2, 'nom' => 'GAMME 2']
-                ]
+                'gammes' => []
             ];
+
+        foreach ($query->result() as $row)
+        {
+            array_push($data['gammes'], ['id' => $row->id , 'nom' => $row->libelle]);
+        }
 
         if (!is_null($idModele)) {
             $devis['idModele'] = $idModele;
@@ -54,9 +58,13 @@ class Devis extends CI_Controller
             $devis['idGamme'] = $idGamme;
             //TODO load les modèles depuis la bdd
             $data['modeles'] = [
-                ['id' => 1, 'nom' => 'Modele 1'],
-                ['id' => 2, 'nom' => 'Modele 2']
             ];
+            $query = $this->db->get('modele');
+            $query = $this->db->get_where('modele', array('idGamme' => $idGamme));
+            foreach ($query->result() as $row)
+            {
+                array_push($data['modeles'], ['id' => $row->id , 'nom' => $row->libelle]);
+            }
         }
 
         $data['devis'] = $devis;

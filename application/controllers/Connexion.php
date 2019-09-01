@@ -40,10 +40,7 @@ class Connexion extends CI_Controller
         if ($this->session->currently_logged_in) {
             $dicoDevisEnCours = array("coucou", "ccco");
 
-            $data = [
-                'dicoDevisEnCours' => $dicoDevisEnCours,
-            ];
-            $this->load->view('vAccueil', $data);
+            redirect('index.php/Home');
         } else {
             redirect('index.php/Connexion/erreurConnexion');
         }
@@ -71,6 +68,6 @@ class Connexion extends CI_Controller
     public function deconnexion()
     {
         $this->session->sess_destroy();
-        redirect('index.php/Connexion/chargerVue');
+        redirect('index.php');
     }
 }

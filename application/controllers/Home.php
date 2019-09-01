@@ -11,7 +11,6 @@ class Home extends CI_Controller
         $this->load->view('parts/vHeader');
 
         //TODO recup les différentes listes depuis la bdd et faire les liens dans l'UI vers la page d'edition
-
         $viewEnAttente = $this->load->view(
             'Home/_devisList',
             [
