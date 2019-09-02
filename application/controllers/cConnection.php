@@ -7,12 +7,9 @@ class cConnection extends CI_Controller
 
     function index()
     {
-        $this->loadView();
-    }
-
-    function loadView()
-    {
+        $this->load->view('parts/vHeader');
         $this->load->view('vConnection');
+        $this->load->view('parts/vFooter');
     }
 
     /**
@@ -23,19 +20,20 @@ class cConnection extends CI_Controller
         $this->load->helper('security');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('username', 'Identifiant:', 'required|trim|xss_clean|callback_validation');
-        $this->form_validation->set_rules('password', 'mot de passe:', 'required|trim');
+        $this->form_validation->set_rules('username', 'Username:', 'required|trim|xss_clean|callback_validation');
+        $this->form_validation->set_rules('password', 'Password:', 'required|trim');
+
         if ($this->form_validation->run()) {
-            $data = array(
+            $data = [
                 'username' => $this->input->post('username'),
-                'idProfile' => $this->User->idProfile,
-                'currently_logged_in' => 1
-            );
+                'currently_logged_in' => true
+            ];
             $this->session->set_userdata($data);
-            //redirect('index.php/cConnection/verifyConnection');
-            $this->verifyConnection();
+            redirect('index.php/Connexion/verificationConnexion');
         } else {
+            $this->load->view('parts/vHeader');
             $this->load->view('vConnection');
+            $this->load->view('parts/vFooter');
         }
     }
 
@@ -59,7 +57,7 @@ class cConnection extends CI_Controller
     public function validation()
     {
         $this->load->model('User');
-        var_dump(password_hash('test',PASSWORD_DEFAULT));
+        var_dump(password_hash('admin',PASSWORD_DEFAULT));
         if ($this->User->checkPassword($this->input->post('username'), $this->input->post('password'))) {
             return true;
         } else {
