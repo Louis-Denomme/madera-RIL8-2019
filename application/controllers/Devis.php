@@ -52,6 +52,7 @@ class Devis extends CI_Controller
 
         if (!is_null($idModele)) {
             $devis['idModele'] = $idModele;
+            $this->session->set_userdata('devis', $devis);
             //Form rempli on doit redirect
             redirect('index.php/Devis/config');
         } else if (!is_null($idGamme)) {
@@ -59,7 +60,6 @@ class Devis extends CI_Controller
             //TODO load les modèles depuis la bdd
             $data['modeles'] = [
             ];
-            $query = $this->db->get('modele');
             $query = $this->db->get_where('modele', array('idGamme' => $idGamme));
             foreach ($query->result() as $row)
             {
@@ -107,6 +107,8 @@ class Devis extends CI_Controller
             show_error('Le devis est incorrect');
 
         //TODO Chargement des modules pour le modèle selectionné et ajout au devis
+        $query = $this->db->get_where('moduledansmodele', array('idModele' => $devis["idModele"]));
+        var_dump($query->result());
         if (!array_key_exists('modules', $devis)) {
             $num = 1;
             $devis['modules'] = [
