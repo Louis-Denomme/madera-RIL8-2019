@@ -9,8 +9,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['ftp_no_connection']         = "Impossible de déterminer une connexion valide. Veuillez vous assurer que vous êtes connecté(e) avant d'exécuter une tâche sur un fichier.";
-$lang['ftp_unable_to_connect']     = "Connexion au serveur FTP impossible avec le nom d'hôte (hostname) spécifié.";
-$lang['ftp_unable_to_login']       = "Connexion au serveur FTP impossible. Veuillez vérifier vos identifiants de connexion.";
+$lang['ftp_unable_to_connect']     = "cConnection au serveur FTP impossible avec le nom d'hôte (hostname) spécifié.";
+$lang['ftp_unable_to_login']       = "cConnection au serveur FTP impossible. Veuillez vérifier vos identifiants de connexion.";
 $lang['ftp_unable_to_mkdir']       = "Impossible de créer le dossier spécifié.";
 $lang['ftp_unable_to_changedir']   = "Impossible de changer de répertoire.";
 $lang['ftp_unable_to_chmod']       = "Impossible de changer les permissions du fichier. Veuillez vérifier le chemin d'accès. Note : cette fonctionnalité n'est disponible qu'avec PHP en version 5 ou supérieure.";

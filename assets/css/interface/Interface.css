@@ -40,7 +40,8 @@ html, body{
 #corps{
     width: calc(100% - 100px);
     background-color: white;
-    font-size: 0;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .navBloc{
@@ -60,16 +61,20 @@ html, body{
 
 #blocDevisAcceptes{
     background-color: #7fba00;
+    order: 2;
 }
 
 #blocDevisEncours{
     background-color: #f25022;
+    order: 1;
 }
 
 #blocDevisRefuses{
     background-color: #00a4ef;
+    order: 3;
 }
 
 #blocNavigationRapide{
     background-color: #ffb900;
+    order: 4;
 }
