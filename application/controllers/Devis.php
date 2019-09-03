@@ -107,32 +107,54 @@ class Devis extends CI_Controller
             show_error('Le devis est incorrect');
 
         //TODO Chargement des modules pour le modèle selectionné et ajout au devis
-        $query = $this->db->get_where('moduledansmodele', array('idModele' => $devis["idModele"]));
-        var_dump($query->result());
+        //$query = $this->db->get_where('moduledansmodele', array('idModele' => $devis["idModele"]));
+        $this->db->select('*');
+        $this->db->from('module');
+        $this->db->join('moduledansmodele', 'moduledansmodele.idModule = module.id');
+        $this->db->where('moduledansmodele.idModele', $devis["idModele"]);
+        $query = $this->db->get();
+
         if (!array_key_exists('modules', $devis)) {
             $num = 1;
             $devis['modules'] = [
-                ['num' => $num++, 'id' => 1, 'nom' => 'Enduit Exterieur'],
-                ['num' => $num++, 'id' => 5, 'nom' => 'Salon'],
+//                ['num' => $num++, 'id' => 1, 'nom' => 'Enduit Exterieur'],
+//                ['num' => $num++, 'id' => 5, 'nom' => 'Salon'],
             ];
+            foreach ($query->result() as $row)
+            {
+                array_push($devis['modules'], ['num' => $num, 'id' => $row->id , 'nom' => $row->libelle]);
+                $num+=1;
+            }
         }
 
         //TODO Chargement de la liste de tout les modules triés par types
+        $modulesGlobale = $this->db->get("module");
+        $typeModule = $this->db->get("typemodule");
         $data = [
-            'modulesGroups' => [
-                'Bati' => [
-                    ['id' => 1, 'nom' => 'Enduit Exterieur'],
-                    ['id' => 2, 'nom' => 'Construction sur pilotis'],
-                    ['id' => 3, 'nom' => 'Vide sanitaire']
-                ],
-                'Pieces' => [
-                    ['id' => 4, 'nom' => 'Cuisine'],
-                    ['id' => 5, 'nom' => 'Salon'],
-                    ['id' => 6, 'nom' => 'Salle de bain']
-                ]
-            ]
+            'modulesGroups' => []
+//                'Bati' => [
+//                    ['id' => 1, 'nom' => 'Enduit Exterieur'],
+//                    ['id' => 2, 'nom' => 'Construction sur pilotis'],
+//                    ['id' => 3, 'nom' => 'Vide sanitaire']
+//                ],
+//                'Pieces' => [
+//                    ['id' => 4, 'nom' => 'Cuisine'],
+//                    ['id' => 5, 'nom' => 'Salon'],
+//                    ['id' => 6, 'nom' => 'Salle de bain']
+//                ]
+//            ]
         ];
 
+        foreach ($typeModule->result() as $rowTypeModule){
+            foreach ( $modulesGlobale->result() as $rowModuleGlobal){
+                if(!array_key_exists($rowTypeModule->libelle, $data["modulesGroups"])){
+                    $data["modulesGroups"][$rowTypeModule->libelle] = [];
+                }
+                if($rowModuleGlobal->idTypeModule == $rowTypeModule->id){
+                    array_push($data["modulesGroups"][$rowTypeModule->libelle], ['id' => $rowModuleGlobal->id, 'nom' => $rowModuleGlobal->libelle]);
+                }
+            }
+        }
 
         $data['devis'] = $devis;
 
