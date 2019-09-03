@@ -29,7 +29,7 @@ class cConnection extends CI_Controller
                 'currently_logged_in' => true
             ];
             $this->session->set_userdata($data);
-            redirect('index.php/Connexion/verificationConnexion');
+            redirect('index.php/cConnection/verifyConnection');
         } else {
             $this->load->view('parts/vHeader');
             $this->load->view('vConnection');
