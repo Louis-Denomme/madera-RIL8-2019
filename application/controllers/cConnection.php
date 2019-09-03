@@ -7,6 +7,10 @@ class cConnection extends CI_Controller
 
     function index()
     {
+        $this->loadView();
+    }
+
+    function loadView(){
         $this->load->view('parts/vHeader');
         $this->load->view('vConnection');
         $this->load->view('parts/vFooter');
@@ -41,7 +45,7 @@ class cConnection extends CI_Controller
     {
         if ($this->session->userdata('currently_logged_in')) {
             //$this->load->view('vHome');
-            redirect('index.php/cHome');
+            redirect('index.php/Home');
         } else {
             //redirect('index.php/cConnection/errorConnection');
             $this->errorConnection();

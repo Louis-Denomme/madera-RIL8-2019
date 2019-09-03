@@ -1,31 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Madera - Accueil</title>
-    <!-- Balises obligatoires dans chaque vue-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/normalize.css">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+<div class="row justify-content-center flex-fill">
+    <div class="col-6 bg-danger">
+        <?= $viewEnAttente ?>
+    </div>
+    <div class="col-6 bg-success">
+        <?= $viewAccepte ?>
+    </div>
+    <div class="col-6 bg-info">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h2>Créer un devis</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Choix du client</label>
+                </div>
+            </div>
+            <?php
+            echo form_open('index.php/Devis/new');
 
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/interface/Interface.css">
-</head>
+            echo validation_errors();
+            ?>
+            <div class="row">
+                <div class="col">
+                    <select name="idClient" class="form-control">
+                        <option disabled selected>-- Choix du client --</option>
+                        <?php foreach ($clients as $client) { ?>
+                            <option value="<?= $client['id'] ?>"><?= $client['nom'] . ' ' . $client['prenom'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-right">
+                    <input type="submit" class="btn btn-light" />
+                </div>
+            </div>
+            <?php
 
-<body>
-<div> <?php require  'interface/vHeader.php'; ?></div>
-<div id="myBody">
-    <?php require 'interface/vNavigation.php'; ?>
-    <div id="corps">
-        <div id="blocDevisEncours" class="homeBloc">
-<!--            <div class="tableHeader">Mes devis en cours</div>-->
-<!--            --><?php //foreach ($dicoDevisEnCours as $devis):
-//                echo $devis;
-//            endforeach;?>
+            echo form_close();
+            ?>
         </div>
-        <div id="blocDevisAcceptes" class="homeBloc"></div>
-        <div id="blocDevisRefuses" class="homeBloc"></div>
-        <div id="blocNavigationRapide" class="homeBloc"></div>
+
+    </div>
+    <div class="col-6 bg-warning">
+        <?= $viewRefuse ?>
     </div>
 </div>
-
-</body>
-</html>

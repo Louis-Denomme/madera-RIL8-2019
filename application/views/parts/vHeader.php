@@ -21,7 +21,7 @@
             </div>
             <?php if (isLogedIn()) { ?>
                 <div class="col text-right pr-5">
-                    <a class="btn btn-light" href="<?php echo base_url() ?>index.php/Connexion/deconnexion">Déconnexion</a>
+                    <a class="btn btn-light" href="<?php echo base_url() ?>index.php/cConnection/logout">Déconnexion</a>
                 </div>
             <?php } ?>
         </div>
