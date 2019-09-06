@@ -108,21 +108,23 @@ class Devis extends CI_Controller
 
         //TODO Chargement des modules pour le modèle selectionné et ajout au devis
         //$query = $this->db->get_where('moduledansmodele', array('idModele' => $devis["idModele"]));
-        $this->db->select('*');
+        $this->db->select('module.id, module.libelle');
+        $this->db->select_sum('composant.prix');
         $this->db->from('module');
-        $this->db->join('moduledansmodele', 'moduledansmodele.idModule = module.id');
+        $this->db->join('moduledansmodele', 'moduledansmodele.idModule = module.id','INNER');
+        $this->db->join('composantdansmodule','composantdansmodule.idModule = module.id','LEFT');
+        $this->db->join('composant','composantdansmodule.idComposant = composant.id','LEFT');
         $this->db->where('moduledansmodele.idModele', $devis["idModele"]);
+        $this->db->group_by('module.id');
         $query = $this->db->get();
 
         if (!array_key_exists('modules', $devis)) {
             $num = 1;
-            $devis['modules'] = [
-//                ['num' => $num++, 'id' => 1, 'nom' => 'Enduit Exterieur'],
-//                ['num' => $num++, 'id' => 5, 'nom' => 'Salon'],
-            ];
+            $devis['modules'] = [];
             foreach ($query->result() as $row)
             {
                 array_push($devis['modules'], ['num' => $num, 'id' => $row->id , 'nom' => $row->libelle]);
+                $devis['prixTotal'] += $row->prix != null ? $row->prix : 0;
                 $num+=1;
             }
         }
@@ -130,20 +132,7 @@ class Devis extends CI_Controller
         //TODO Chargement de la liste de tout les modules triés par types
         $modulesGlobale = $this->db->get("module");
         $typeModule = $this->db->get("typemodule");
-        $data = [
-            'modulesGroups' => []
-//                'Bati' => [
-//                    ['id' => 1, 'nom' => 'Enduit Exterieur'],
-//                    ['id' => 2, 'nom' => 'Construction sur pilotis'],
-//                    ['id' => 3, 'nom' => 'Vide sanitaire']
-//                ],
-//                'Pieces' => [
-//                    ['id' => 4, 'nom' => 'Cuisine'],
-//                    ['id' => 5, 'nom' => 'Salon'],
-//                    ['id' => 6, 'nom' => 'Salle de bain']
-//                ]
-//            ]
-        ];
+        $data = ['modulesGroups' => []];
 
         foreach ($typeModule->result() as $rowTypeModule){
             foreach ( $modulesGlobale->result() as $rowModuleGlobal){
@@ -155,7 +144,6 @@ class Devis extends CI_Controller
                 }
             }
         }
-
         $data['devis'] = $devis;
 
         $this->session->set_userdata('devis', $devis);
