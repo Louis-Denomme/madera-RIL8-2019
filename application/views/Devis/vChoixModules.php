@@ -44,6 +44,9 @@
     <?php echo form_close(); ?>
 
     <div class="row mt-5">
+        <div class="col text-left">
+            <span>Prix total : <?php echo $devis['prixTotal']; ?>€</span>
+        </div>
         <div class="col text-right">
             <a href="<?php echo base_url(); ?>index.php/Devis/recap" class="btn btn-success">Valider</a>
         </div>

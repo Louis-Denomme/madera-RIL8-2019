@@ -58,8 +58,7 @@ class Devis extends CI_Controller
         } else if (!is_null($idGamme)) {
             $devis['idGamme'] = $idGamme;
             //TODO load les modèles depuis la bdd
-            $data['modeles'] = [
-            ];
+            $data['modeles'] = [];
             $query = $this->db->get_where('modele', array('idGamme' => $idGamme));
             foreach ($query->result() as $row)
             {
@@ -121,6 +120,7 @@ class Devis extends CI_Controller
         if (!array_key_exists('modules', $devis)) {
             $num = 1;
             $devis['modules'] = [];
+            $devis['prixTotal'] = 0;
             foreach ($query->result() as $row)
             {
                 array_push($devis['modules'], ['num' => $num, 'id' => $row->id , 'nom' => $row->libelle]);
@@ -154,7 +154,7 @@ class Devis extends CI_Controller
             'Devis/vChoixModules',
             $data
         );
-
+        var_dump($devis['prixTotal']);
         $this->load->view('parts/vFooter');
     }
 
