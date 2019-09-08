@@ -21,6 +21,9 @@ class Devis extends CI_Controller
         $this->load->view('parts/vFooter');
     }
 
+    /**
+     *
+     */
     function new()
     {
         //checkLogin();
@@ -41,9 +44,9 @@ class Devis extends CI_Controller
         $this->load->database();
         $query = $this->db->get('gamme');
         $data =
-            [
+            array(
                 'gammes' => []
-            ];
+            );
 
         foreach ($query->result() as $row)
         {

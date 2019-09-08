@@ -19,7 +19,7 @@ class cHome extends CI_Controller
 
     function loadView()
     {
-        $dicoDevisEnCours = array("coucou","ccco");
+        $dicoDevisEnCours = array("coucou", "ccco");
 
         $data = array(
             'dicoDevisEnCours' => $dicoDevisEnCours,
@@ -27,19 +27,11 @@ class cHome extends CI_Controller
         $this->load->view("vHome");
     }
 
-    public function isAllowedToCreateAccount()
-    {
-        // idProfile = 1 = admin
-        if ($this->session->userdata['idProfile'] == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function loadCreateAccountView()
     {
+        $this->load->view('parts/vHeader');
         $this->load->view('vCreateAccount');
+        $this->load->view('parts/vFooter');
     }
 
     public function tryCreateAccount()
@@ -49,29 +41,32 @@ class cHome extends CI_Controller
         $this->load->library('form_validation');
 
 
-        $this->form_validation->set_rules('name', 'Nom :', 'required|trim');
-        $this->form_validation->set_rules('firstname', 'Prénom :', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('username', 'Identifiant:', 'required|trim');
-        $this->form_validation->set_rules('password', 'Mot de passe', 'trim|required|min_length[6]');
-        $this->form_validation->set_rules('confirmPassword', 'Confirmer mot de passe', 'required|matches[password]');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+
+        $this->form_validation->set_rules('lastname', '"Nom"', 'required|trim');
+        $this->form_validation->set_rules('firstname', '"Prénom"', 'required|trim');
+        $this->form_validation->set_rules('email', '"Email"', 'trim|required|valid_email');
+        $this->form_validation->set_rules('username', '"Identifiant"', 'required|trim|is_unique[user.username]');
+        $this->form_validation->set_rules('password', '"Mot de passe"', 'trim|required|min_length[6]');
+        $this->form_validation->set_rules('confirmPassword', '"Confirmation mot de passe"', 'required|matches[password]');
 
         if ($this->form_validation->run() && $this->validation()) {
-            $this->load->view('vHome');
+            redirect('index.php/Home');
         } else {
-            $this->load->view('vCreateAccount');
+            $this->loadCreateAccountView();
         }
 
     }
 
-    function sendEmailCreationAccount($email) {
+    function sendEmailCreationAccount($email)
+    {
         $this->load->config('email');
         $this->load->library('email');
 
         $from = $this->config->item('smtp_user');
         $to = $email;
         $subject = 'Création de compte réussi !';
-        $message = 'Identifiant : '.$this->input->post('username').'\n Mot de passe : '.$this->input->post('password');
+        $message = 'Identifiant : ' . $this->input->post('username') . '\n Mot de passe : ' . $this->input->post('password');
 
         $this->email->set_newline("\r\n");
         $this->email->from($from);
@@ -88,23 +83,19 @@ class cHome extends CI_Controller
 
     public function validation()
     {
-        var_dump("validation");
+        //var_dump("validation");
         $email = $this->input->post('email');
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $profil = $this->input->post('profil');
 
         $this->load->model('User');
-        if ($this->User->usernameExist($username)) {
-            $this->form_validation->set_message('validation', 'L\'identifiant renseigné existe déjà !');
-            return false;
-        }
-
         $this->User->createAccount($username, $password, $profil);
-        if ($this->User->usernameExist($username)) {
-           // $this->sendEmailCreationAccount($email);
+        if (!$this->form_validation->is_unique($username,'user.username')) {
+            // is_unique == false ==  exist in db! success create
             return true;
         } else {
+            // is_unique == true == not  exist in db! error create
             return false;
         }
     }

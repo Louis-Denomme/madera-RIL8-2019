@@ -10,7 +10,8 @@ class cConnection extends CI_Controller
         $this->loadView();
     }
 
-    function loadView(){
+    function loadView()
+    {
         $this->load->view('parts/vHeader');
         $this->load->view('vConnection');
         $this->load->view('parts/vFooter');
@@ -24,20 +25,21 @@ class cConnection extends CI_Controller
         $this->load->helper('security');
         $this->load->library('form_validation');
 
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+
         $this->form_validation->set_rules('username', 'Username:', 'required|trim|xss_clean|callback_validation');
         $this->form_validation->set_rules('password', 'Password:', 'required|trim');
 
         if ($this->form_validation->run()) {
-            $data = [
+            $data = array(
                 'username' => $this->input->post('username'),
+                'idProfile' => $this->User->idProfile,
                 'currently_logged_in' => true
-            ];
+            );
             $this->session->set_userdata($data);
             redirect('index.php/cConnection/verifyConnection');
         } else {
-            $this->load->view('parts/vHeader');
-            $this->load->view('vConnection');
-            $this->load->view('parts/vFooter');
+            $this->loadView();
         }
     }
 
@@ -61,7 +63,7 @@ class cConnection extends CI_Controller
     public function validation()
     {
         $this->load->model('User');
-        var_dump(password_hash('admin',PASSWORD_DEFAULT));
+        // var_dump(password_hash('admin',PASSWORD_DEFAULT));
         if ($this->User->checkPassword($this->input->post('username'), $this->input->post('password'))) {
             return true;
         } else {
@@ -72,6 +74,7 @@ class cConnection extends CI_Controller
 
     public function logout()
     {
+        $this->session->currently_logged_in = false;
         $this->session->sess_destroy();
         //redirect('index.php/cConnection/loadView');
         $this->loadView();
