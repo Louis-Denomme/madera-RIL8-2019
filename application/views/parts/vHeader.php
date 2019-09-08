@@ -19,7 +19,7 @@
                 <?php if (isLogedIn()) {
                     $maderaUrl = base_url()."index.php/Home";
                 } else {
-                    $maderaUrl = "";
+                    $maderaUrl = base_url()."index.php";
                 }
                 ?>
                 <a class="btn btn-dark" href="<?php echo $maderaUrl ?>">
