@@ -9,23 +9,6 @@ class User extends CI_Model
     public $idProfile;
     public $dateCreate;
 
-
-    public function getPasswordByUsername($username)
-    {
-        $query = $this->db
-            ->select('*')
-            ->from('user')
-            ->where('username', $username)
-            ->get();
-        if ($query->num_rows() != 1) {
-            return null;
-        } else {
-            $row = $query->row();
-            $password = $row->password;
-            return $password;
-        }
-    }
-
     public function checkPassword($username, $password)
     {
         $query = $this->db
@@ -71,22 +54,19 @@ class User extends CI_Model
         if ($profilValue == 'profilCommercial') {
             $idProfile = 2;
         }
+/*
+        $data = array(
+            'username' => $username,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'idProfile' => $idProfile,
+            'dateCreated' => gmdate('Y-m-d H:i:s', time() + 3600 * 2)
+        );
+
+        $this->db->insert('user', $data);
+*/
 
         $sql = "insert into user (username, password, idProfile)
         values ('" . $username . "', '" . password_hash($password, PASSWORD_DEFAULT) . "'," . $idProfile . ")";
-
-        $this->db->query($sql);
-    }
-
-    public function updateAccount($data)
-    {
-        $sql = "update user 
-            set idProfile = '" . $data['idProfile'] . "', 
-                password = '" . password_hash($data['password'], PASSWORD_DEFAULT) . "' 
-            where username = '" . $data['username'] . "'";
-
-        $this->password = $data['password'];
-        $this->idProfile = $data['idProfile'];
 
         $this->db->query($sql);
     }
