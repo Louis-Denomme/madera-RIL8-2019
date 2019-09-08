@@ -6,117 +6,69 @@
 
 </head>
 <body>
-<h1>Demande de création de compte.</h1>
-
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="card">
-                <div class="card-header">Inscription</div>
+        <div class="col-6">
+            <div class="card p-5">
                 <div class="card-body">
-
-                    <form class="form-horizontal" method="post"
-                          action="<?= base_url() ?>index.php/cHome/tryCreateAccount">
-
-                        <?= validation_errors(); ?>
-
-
-                        <div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label">Nom</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa"
-                                                                       aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nom"
-                                           required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label">Prenom</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa"
-                                                                       aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="firstname" id="firstname"
-                                           placeholder="Prénom" required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="cols-sm-2 control-label">Email</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Email"
-                                           required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="cols-sm-2 control-label">Identifiant</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-users fa"
-                                                                       aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                           placeholder="Identifiant" required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="cols-sm-2 control-label">Mot de passe</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="password" id="password"
-                                           placeholder="Mot de passe" required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm" class="cols-sm-2 control-label">Confirmer mot de passe</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="confirmPassword"
-                                           id="confirmPassword"
-                                           placeholder="Confirmation mot de passe" required/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profil" class="cols-sm-2 control-label">Profil utilisateur</label>
-                            <div class="cols-sm-10">
-
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" value="profilAdmin"
-                                           name="profil">
-                                    <label for="profilAdmin">Admin</label>
-                                </div>
-
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" value="profilCommercial"
-                                           name="profil" checked>
-                                    <label  for="profilCommercial">Commercial</label>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="form-group ">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Envoyer</button>
-                        </div>
-                    </form>
+                    <h3 class="card-title">Création d'un compte</h3>
                 </div>
+                <div class="card-text">
+                    <?php
 
+                    echo form_open('index.php/cHome/tryCreateAccount');
+
+                    echo "<p class='form-group'> ";
+                    echo form_input('lastname', $this->input->post('lastname'), array('class' => 'form-control', 'placeholder' => 'Nom'));
+                    echo form_error('lastname');
+                    echo "</p> ";
+
+                    echo "<p class='form-group'> ";
+                    echo form_input('firstname', $this->input->post('firstname'), array('class' => 'form-control', 'placeholder' => 'Prénom'));
+                    echo form_error('firstname');
+                    echo "</p> ";
+
+                    echo "<p class='form-group'> ";
+                    echo form_input('email', $this->input->post('email'), array('class' => 'form-control', 'placeholder' => 'Email'));
+                    echo form_error('email');
+                    echo "</p> ";
+
+                    echo "<p class='form-group'> ";
+                    echo form_input('username', $this->input->post('username'), array('class' => 'form-control', 'placeholder' => 'Identifiant'));
+                    echo form_error('username');
+                    echo "</p> ";
+
+                    echo "<p class='form-group'> ";
+                    echo form_password(array('name' => 'password', 'class' => 'form-control', 'placeholder' => 'Mot de passe'));
+                    echo form_error('password');
+                    echo "</p>";
+
+                    echo "<p class='form-group'> ";
+                    echo form_password(array('name' => 'confirmPassword', 'class' => 'form-control', 'placeholder' => 'Confirmation mot de passe'));
+                    echo form_error('confirmPassword');
+                    echo "</p>";
+
+                    echo "<div><label class='radio-inline'>";
+                    echo form_radio(array('name' => 'profil', 'class' => '', 'value' => 'profilAdmin'));
+                    echo "Admin";
+                    echo "</label></div>";
+
+                    echo "<div><label class='radio-inline'>";
+                    echo form_radio(array('name' => 'profil', 'class' => '', 'checked' => 'checked', 'value' => 'profilCommercial'));
+                    echo "Commercial";
+                    echo "</label></div>";
+
+                    echo "<div class='mt-3 text-right'>";
+                    echo form_submit('login_submit', 'Valider', array('class' => 'btn btn-primary btn-lg'));
+                    echo "</div>";
+
+                    echo form_close();
+
+                    ?></div>
             </div>
         </div>
     </div>
+
 </div>
-
-
 </body>
 </html>
