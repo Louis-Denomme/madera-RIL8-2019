@@ -8,7 +8,7 @@
         <div class="col">
             <ul>
                 <?php foreach ($devisList as $devis) { ?>
-                    <li><a href="<?= base_url() ?>index.php/devis/TODO_ID_DEVIS">Devis <?= $devis ?></a></li>
+                    <li><a href="<?= base_url() ?>index.php/devis/recap/<?=$devis ?>">Devis <?= $devis ?></a></li>
                 <?php } ?>
             </ul>
         </div>

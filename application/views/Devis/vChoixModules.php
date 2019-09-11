@@ -48,7 +48,7 @@
             <span>Prix total : <?php echo $devis['prixTotal']; ?>€</span>
         </div>
         <div class="col text-right">
-            <a href="<?php echo base_url(); ?>index.php/Devis/recap" class="btn btn-success">Valider</a>
+            <a href="<?php echo base_url(); ?>index.php/Devis/insert" class="btn btn-success">Valider</a>
         </div>
     </div>
 </div>

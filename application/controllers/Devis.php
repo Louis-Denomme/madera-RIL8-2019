@@ -80,12 +80,66 @@ class Devis extends CI_Controller
         $this->load->view('parts/vFooter');
     }
 
-    function recap()
+    function insert(){
+        $this->db->select_max('id');
+        $this->db->from('devis');
+        $query = $this->db->get();
+        $resultat = $query->result();
+
+        $idDevis = $resultat[0]->id == null ? 1 : $resultat[0]->id + 1 ;
+        $devis = $this->session->devis;
+
+        $data = array(
+            'id' => $idDevis,
+            'idClient' => 1,
+            'idModele' => $devis['idModele'],
+            'etat' => 'en attente BU',
+            'dateCreation' => date("Y-m-d H:i:s"),
+            'adresse' => 'TODO VIVIEN',
+            'idUserCreation' => $this->session->userdata['idProfile'],
+            'dateModif' => date("Y-m-d H:i:s"),
+            'idUserModif' => $this->session->userdata['idProfile']
+        );
+
+        $this->db->insert('devis', $data);
+
+        foreach ($devis['modules'] as $module){
+            $data = array(
+                'idDevis' => $idDevis,
+                'idModule' => $module['id']
+            );
+            //var_dump($data);
+            $this->db->insert('devismodules', $data);
+        }
+        //var_dump($devis);
+
+        $this->recap();
+    }
+
+    function recap($id)
     {
         //checkLogin();
         //TODO 
+        $devis = $this->db->get_where('devis', array('id' => $id))->result()[0];
+        $client = $this->db->get_where('client', array('id' => $devis->idClient))->result()[0];
 
-        $data = [];
+        $this->db->select('module.libelle, module.reference, typemodule.libelle ');
+        $this->db->from('module');
+        $this->db->join('devismodules', 'devismodules.idModule = module.id','INNER');
+        $this->db->join('typemodule','typemodule.id = module.idTypeModule','INNER');
+        $this->db->join('devis','devis.id = devismodules.idDevis','INNER');
+        $this->db->where('devis.id', $devis->id);
+        $modules = $this->db->get();
+        //$modules = $this->db->get_where('devismodules', array('idDevis' => $devis->id))->result();
+
+        if(count($modules)<=0){
+            $data['hasResult'] = false;
+        }else{
+            $data['hasResult'] = true;
+        }
+
+        //var_dump($modules->result());
+
 
         $this->load->view('parts/vHeader');
 

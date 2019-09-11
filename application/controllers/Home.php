@@ -16,8 +16,8 @@ class Home extends CI_Controller
             [
                 'title' => 'Devis en attente',
                 'devisList' => [
-                    'a',
-                    'b'
+                    1,
+                    2
                 ]
             ],
             true
@@ -27,8 +27,8 @@ class Home extends CI_Controller
             [
                 'title' => 'Devis acceptés',
                 'devisList' => [
-                    'a',
-                    'b'
+                    1,
+                    2
                 ]
             ],
             true
@@ -38,8 +38,8 @@ class Home extends CI_Controller
             [
                 'title' => 'Devis refusés',
                 'devisList' => [
-                    'a',
-                    'b'
+                    1,
+                    2
                 ]
             ],
             true
