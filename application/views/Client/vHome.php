@@ -23,7 +23,7 @@
 						<td><?= $c['nom'] ?></td>
 						<td><?= $c['email'] ?></td>
 						<td><?= $c['telephone'] ?></td>
-						<td><?= $c['dateCreate'] ?></td>
+						<td><?= dateSql2fr($c['dateCreate']) ?></td>
 						<td><?= $c['nb_devis'] ?></td>
 					</tr>
 				<? } ?>

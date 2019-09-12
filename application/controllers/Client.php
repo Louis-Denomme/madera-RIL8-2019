@@ -67,10 +67,12 @@ class Client extends CI_Controller {
 		$this->db->trans_start();
 		$this->client->insert($data);
 		$this->db->trans_complete();
-		if ($this->db->trans_status() !== FALSE) {
-			echo json_encode(['success' => true]);
-		} else {
+		
+		// Si on a eu une erreur dans la transaction
+		if ($this->db->trans_status() === FALSE) {
 			echo json_encode(['error' => 'Erreur lors de l\'ajout du client']);
+		} else {
+			echo json_encode(['success' => true]);
 		}
 	}
 
