@@ -3,6 +3,10 @@
 <br/>
 <div class="container">
 	<div class="row">
+		<button class="btn btn-primary" onclick="Client.openDialogAddNewClient()"> Ajouter un nouveau client</button>
+	</div>
+	<br/>
+	<div class="row">
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -26,4 +30,8 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<!-- Modal ajout client -->
+<div class="modal fade" id="MODAL-AJOUT-CLIENT" role="dialog" aria-labelledby="MODAL-AJOUT-CLIENT">
 </div>
