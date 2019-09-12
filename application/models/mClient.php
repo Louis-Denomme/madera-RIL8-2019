@@ -1,143 +1,142 @@
 <?php
 
+class mClient extends CI_Model {
 
-class mClient
-{
-    private $id;
-    private $name;
-    private $mail;
-    private $phone;
-    private $idAdress;
-    private $createdAt;
-    private $updatedAt;
+	private $id;
+	private $name;
+	private $mail;
+	private $phone;
+	private $idAdress;
+	private $createdAt;
+	private $updatedAt;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function __construct() {
+		parent::__construct();
+		$this->_fields = [];
+		$this->_tblName = 'client';
+	}
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
+	/**
+	 * getAll clients
+	 * @return type
+	 */
+	public function getAll() {
+		$query = $this->db->get($this->_tblName);
+		$data = $query->result_array();
+		$query->free_result();
+		return $data;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+	/**
+	 * @param mixed $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getMail()
-    {
-        return $this->mail;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->name;
+	}
 
-    /**
-     * @param mixed $mail
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
-    }
+	/**
+	 * @param mixed $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getMail() {
+		return $this->mail;
+	}
 
-    /**
-     * @param mixed $phone
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    }
+	/**
+	 * @param mixed $mail
+	 */
+	public function setMail($mail) {
+		$this->mail = $mail;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getIdAdress()
-    {
-        return $this->idAdress;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getPhone() {
+		return $this->phone;
+	}
 
-    /**
-     * @param mixed $idAdress
-     */
-    public function setIdAdress($idAdress)
-    {
-        $this->idAdress = $idAdress;
-    }
+	/**
+	 * @param mixed $phone
+	 */
+	public function setPhone($phone) {
+		$this->phone = $phone;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getCreateDate()
-    {
-        return $this->createDate;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getIdAdress() {
+		return $this->idAdress;
+	}
 
-    /**
-     * @param mixed $createDate
-     */
-    public function setCreateDate($createDate)
-    {
-        $this->createDate = $createDate;
-    }
+	/**
+	 * @param mixed $idAdress
+	 */
+	public function setIdAdress($idAdress) {
+		$this->idAdress = $idAdress;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getCreateDate() {
+		return $this->createDate;
+	}
 
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
+	/**
+	 * @param mixed $createDate
+	 */
+	public function setCreateDate($createDate) {
+		$this->createDate = $createDate;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
 
-    /**
-     * @param mixed $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
+	/**
+	 * @param mixed $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+
+	/**
+	 * @param mixed $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
 
 }
