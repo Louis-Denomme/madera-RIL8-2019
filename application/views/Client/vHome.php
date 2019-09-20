@@ -28,7 +28,7 @@
 						<td><?= $c['nb_devis'] ?></td>
 						<td>
 							<button class="btn btn-sm btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('update', <?=$c['id']?>)">Modifier</button>
-							<button class="btn btn-sm btn-danger">Supprimer</button>
+							<button class="btn btn-sm btn-danger" onclick="Client.deleteClient('update', <?=$c['id']?>)">Supprimer</button>
 						</td>
 					</tr>
 				<? } ?>
