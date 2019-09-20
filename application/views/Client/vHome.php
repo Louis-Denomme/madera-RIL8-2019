@@ -2,6 +2,7 @@
 <h1 class="">Clients <br/><small class="text-muted">Récapitulatif</small></h1>
 <br/>
 <div class="container">
+	<? if(!empty($clients)) {?>
 	<div class="row">
 		<button class="btn btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('add')"> Ajouter un nouveau client</button>
 	</div>
@@ -20,21 +21,34 @@
 			</thead>
 			<tbody>
 				<? foreach($clients as $c) { ?>
-					<tr>
-						<td><?= $c['nom'] ?></td>
-						<td><?= $c['email'] ?></td>
-						<td><?= $c['telephone'] ?></td>
-						<td><?= dateSql2fr($c['dateCreate']) ?></td>
-						<td><?= $c['nb_devis'] ?></td>
-						<td>
-							<button class="btn btn-sm btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('update', <?=$c['id']?>)">Modifier</button>
-							<button class="btn btn-sm btn-danger" onclick="Client.deleteClient('update', <?=$c['id']?>)">Supprimer</button>
-						</td>
-					</tr>
+				<tr>
+					<td><?= $c['nom'] ?></td>
+					<td><?= $c['email'] ?></td>
+					<td><?= $c['telephone'] ?></td>
+					<td><?= dateSql2fr($c['dateCreate']) ?></td>
+					<td><?= $c['nb_devis'] ?></td>
+					<td>
+						<button class="btn btn-sm btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('update', <?= $c['id'] ?>)">Modifier</button>
+						<button class="btn btn-sm btn-danger" onclick="Client.deleteClient(<?= $c['id'] ?>)">Supprimer</button>
+					</td>
+				</tr>
 				<? } ?>
 			</tbody>
 		</table>
 	</div>
+	<? } else { ?>
+	<div class="row flex">
+		<div class="col" style="text-align: center">
+			<h2>Aucun client connu. Veuillez ajouter un nouveau client</h2>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col" style="text-align: center">
+			<button class="btn btn-lg btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('add')"> Ajouter un nouveau client</button>
+		</div>
+	</div>
+	<? }?>
 </div>
 
 <!-- Modal ajout client -->

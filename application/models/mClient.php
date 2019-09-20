@@ -93,6 +93,7 @@ class mClient extends CI_Model {
 	 * @param type $CLIENT_ID
 	 */
 	public function delete($CLIENT_ID) {
+		$this->db->delete('devis', ['idClient' => $CLIENT_ID]);
 		$this->db->delete($this->_tblName, ['id' => $CLIENT_ID]);
 	}
 

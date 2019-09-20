@@ -92,4 +92,21 @@ class Client extends CI_Controller {
 		}
 	}
 	
+	public function deleteClient() {
+		$id = get_post('id', null);
+		if(empty($id)){
+			echo json_encode(['error' => 'Erreur, client inconnu']);
+			exit;
+		}
+		// début Transaction SQL
+		$this->db->trans_start();
+		$this->client->delete($id);
+		$this->db->trans_complete();
+		// Si on a eu une erreur dans la transaction
+		if ($this->db->trans_status() === FALSE) {
+			echo json_encode(['error' => 'Erreur lors de la suppression du client']);
+		} else {
+			echo json_encode(['success' => true]);
+		}
+	}
 }
