@@ -1,9 +1,14 @@
 /* global base_url, Window */
 Client = {
-	openDialogAddNewClient: function () {
+	openDialogAddOrUpdateNewClient: function (action, id) {
+		if(id !== undefined)
+			var url = base_url + 'index.php/Client/openDialogAddOrUpdateNewClient/' + action + '/' + id;
+		else 
+			var url = base_url + 'index.php/Client/openDialogAddOrUpdateNewClient/' + action;
+			
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'index.php/Client/openDialogAddNewClient',
+			url: url,
 			success: function (html) {
 				if (html.length > 0) {
 					$('#MODAL-AJOUT-CLIENT').appendTo('body');
@@ -17,14 +22,15 @@ Client = {
 		});
 	},
 
-	addNewClient: function () {
+	addOrUpdateNewClient: function (id) {
 		var data = {};
 		$('#MODAL-AJOUT-CLIENT').find('input[type=text]').each(function () {
 			data[$(this).attr('name')] = $(this).val();
 		});
+		data.id = id;
 		$.ajax({
 			type: 'POST',
-			url: base_url + 'index.php/Client/addNewClient',
+			url: base_url + 'index.php/Client/addOrUpdateNewClient',
 			dataType: 'json',
 			data: data,
 			success: function (callback) {

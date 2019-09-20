@@ -3,7 +3,7 @@
 <br/>
 <div class="container">
 	<div class="row">
-		<button class="btn btn-primary" onclick="Client.openDialogAddNewClient()"> Ajouter un nouveau client</button>
+		<button class="btn btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('add')"> Ajouter un nouveau client</button>
 	</div>
 	<br/>
 	<div class="row">
@@ -15,6 +15,7 @@
 					<th>Téléphone</th>
 					<th>Date de création</th>
 					<th>Nombre de devis</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,6 +26,10 @@
 						<td><?= $c['telephone'] ?></td>
 						<td><?= dateSql2fr($c['dateCreate']) ?></td>
 						<td><?= $c['nb_devis'] ?></td>
+						<td>
+							<button class="btn btn-sm btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('update', <?=$c['id']?>)">Modifier</button>
+							<button class="btn btn-sm btn-danger">Supprimer</button>
+						</td>
 					</tr>
 				<? } ?>
 			</tbody>

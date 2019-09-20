@@ -30,10 +30,44 @@ class mClient extends CI_Model {
 		$query->free_result();
 		return $data;
 	}
+	
+	/**
+	 * get un client par son ID
+	 * @param type $CLIENT_ID
+	 * @return type
+	 */
+	public function getByID($CLIENT_ID) {
+		$this->db->select('*');
+		$this->db->from($this->_tblName);
+		$this->db->where('id', $CLIENT_ID);
+		$query = $this->db->get();
+		$data = $query->result_array();
+		$query->free_result();
+		if(!empty($data))
+			return $data[0];
+		else 
+			return [];
+	}
 
 	/* ------------------------------------------------------------------------ */
-	/* 								UPDATE									  */
+	/* 								UPDATE										*/
 	/* ------------------------------------------------------------------------ */
+	
+	/**
+	 * Update un client avec les données contenues dans $data
+	 * @param type $data
+	 * @param type $CLIENT_ID
+	 * @return type
+	 */
+	public function update($data, $CLIENT_ID) {
+		$this->db->from($this->_tblName);
+		foreach ($data as $k => $value) {
+			$this->db->set($k, $value);
+		}
+		$this->db->where('id', $CLIENT_ID);
+		$this->db->update();
+		return $this->db->affected_rows();
+	}
 
 	/* ------------------------------------------------------------------------ */
 	/* 								INSERT									  */
@@ -54,6 +88,13 @@ class mClient extends CI_Model {
 	/* 								DELETE									  */
 	/* ------------------------------------------------------------------------ */
 
+	/**
+	 * Delete un client
+	 * @param type $CLIENT_ID
+	 */
+	public function delete($CLIENT_ID) {
+		$this->db->delete($this->_tblName, ['id' => $CLIENT_ID]);
+	}
 
 	/* ------------------------------------------------------------------------ */
 	/* 							GETTER / SETTER								  */

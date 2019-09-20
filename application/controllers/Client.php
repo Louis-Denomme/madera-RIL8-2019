@@ -34,20 +34,32 @@ class Client extends CI_Controller {
 	/**
 	 * Renvoi la vue d'un nouveau client
 	 */
-	public function openDialogAddNewClient() {
-		echo $this->load->view('Client/dialog/vNewClient', [], true);
+	public function openDialogAddOrUpdateNewClient($action, $id = null) {
+		// si on ajoute un nouveau client
+		if($action === 'add') {
+			echo $this->load->view('Client/dialog/vNewClient', ['client' => []], true);
+			
+		//Si on l'update
+		} else {
+			$data['client'] = $this->client->getById($id);
+			if(empty($data['client'])) {
+				exit;
+			}
+			echo $this->load->view('Client/dialog/vNewClient', $data, true);
+		}
 	}
 
 	/**
 	 * Ajoute un nouveau client
 	 */
-	public function addNewClient() {
+	public function addOrUpdateNewClient() {
 		// Récupère les données envoyées en POST par l'appel Ajax
 		$data = [
 			'nom' => get_post('nomClient', null),
 			'email' => get_post('emailClient', null),
 			'telephone' => get_post('telClient', null)
 		];
+		$id = get_post('id', null);
 
 		// Vérification de données non vide
 		if (empty($data['nom'])) {
@@ -65,7 +77,11 @@ class Client extends CI_Controller {
 
 		// début transaction SQL
 		$this->db->trans_start();
-		$this->client->insert($data);
+		if(!empty($id)) {
+			$this->client->update($data, $id);
+		} else {
+			$this->client->insert($data);
+		}
 		$this->db->trans_complete();
 		
 		// Si on a eu une erreur dans la transaction
@@ -75,5 +91,5 @@ class Client extends CI_Controller {
 			echo json_encode(['success' => true]);
 		}
 	}
-
+	
 }
