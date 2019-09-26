@@ -89,6 +89,7 @@ class Devis extends CI_Controller
         $idDevis = $resultat[0]->id == null ? 1 : $resultat[0]->id + 1 ;
         $devis = $this->session->devis;
 
+        //Ajout du devis
         $data = array(
             'id' => $idDevis,
             'idClient' => 1,
@@ -103,15 +104,8 @@ class Devis extends CI_Controller
 
         $this->db->insert('devis', $data);
 
-        foreach ($devis['modules'] as $module){
-            $data = array(
-                'idDevis' => $idDevis,
-                'idModule' => $module['id']
-            );
-            //var_dump($data);
-            $this->db->insert('devismodules', $data);
-        }
-
+        //Ajout des modules du modèle de base
+        $this->db->query('INSERT INTO devismodules (devismodules.idDevis, devismodules.idModule) SELECT '. $idDevis .', moduledansmodele.idModule FROM moduledansmodele WHERE moduledansmodele.idModele = '. $devis['idModele'] .';');
         $this->recap($idDevis);
     }
 
@@ -160,7 +154,7 @@ class Devis extends CI_Controller
         $this->load->view('parts/vFooter');
     }
 
-    function config()
+    function config($idDevis)
     {
         //checkLogin();
         $devis = $this->session->devis;
@@ -173,10 +167,10 @@ class Devis extends CI_Controller
         $this->db->select('module.id, module.libelle');
         $this->db->select_sum('composant.prix');
         $this->db->from('module');
-        $this->db->join('moduledansmodele', 'moduledansmodele.idModule = module.id','INNER');
+        $this->db->join('devismodules', 'devismodules.idModule = module.id','INNER');
         $this->db->join('composantdansmodule','composantdansmodule.idModule = module.id','LEFT');
         $this->db->join('composant','composantdansmodule.idComposant = composant.id','LEFT');
-        $this->db->where('moduledansmodele.idModele', $devis["idModele"]);
+        $this->db->where('devismodules.idDevis', $idDevis);
         $this->db->group_by('module.id');
         $query = $this->db->get();
 
