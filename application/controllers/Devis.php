@@ -93,7 +93,7 @@ class Devis extends CI_Controller
             'id' => $idDevis,
             'idClient' => 1,
             'idModele' => $devis['idModele'],
-            'etat' => 'en attente BU',
+            'etat' => '1',
             'dateCreation' => date("Y-m-d H:i:s"),
             'adresse' => 'TODO VIVIEN',
             'idUserCreation' => $this->session->userdata['idProfile'],
@@ -111,9 +111,12 @@ class Devis extends CI_Controller
             //var_dump($data);
             $this->db->insert('devismodules', $data);
         }
-        //var_dump($devis);
 
-        $this->recap();
+        $this->recap($idDevis);
+    }
+
+    function edit($idDevis){
+
     }
 
     function recap($id)
@@ -123,22 +126,28 @@ class Devis extends CI_Controller
         $devis = $this->db->get_where('devis', array('id' => $id))->result()[0];
         $client = $this->db->get_where('client', array('id' => $devis->idClient))->result()[0];
 
-        $this->db->select('module.libelle, module.reference, typemodule.libelle ');
+        $this->db->select('module.libelle AS moduleLib, module.reference, typemodule.libelle AS typeModuleLib ');
         $this->db->from('module');
         $this->db->join('devismodules', 'devismodules.idModule = module.id','INNER');
         $this->db->join('typemodule','typemodule.id = module.idTypeModule','INNER');
         $this->db->join('devis','devis.id = devismodules.idDevis','INNER');
         $this->db->where('devis.id', $devis->id);
-        $modules = $this->db->get();
+        $modules = $this->db->get()->result();
         //$modules = $this->db->get_where('devismodules', array('idDevis' => $devis->id))->result();
 
+        $etatLibelle = $this->getEtatDevis($devis->etat);
+        $data['devis'] = $devis;
+        $data['client'] = $client;
+        $data['etatLibelle'] = $etatLibelle;
         if(count($modules)<=0){
             $data['hasResult'] = false;
         }else{
             $data['hasResult'] = true;
+            $data['modules'] = $modules;
         }
 
-        //var_dump($modules->result());
+        //var_dump($modules);
+        $this->session->set_userdata('devis', $devis);
 
 
         $this->load->view('parts/vHeader');
@@ -170,6 +179,8 @@ class Devis extends CI_Controller
         $this->db->where('moduledansmodele.idModele', $devis["idModele"]);
         $this->db->group_by('module.id');
         $query = $this->db->get();
+
+        //var_dump($query->result());
 
         if (!array_key_exists('modules', $devis)) {
             $num = 1;
@@ -295,5 +306,31 @@ class Devis extends CI_Controller
 
 
         redirect('index.php/Devis/config');
+    }
+
+    public function getEtatDevis($etat){
+        switch ($etat){
+            case 1:
+                return "en attente de la validation client";
+                break;
+            case 2:
+                return "en attente de la validation du BU";
+                break;
+            case 3:
+                return "en attente de l'acceptation du client";
+                break;
+            case 4:
+                return "devis accepté";
+                break;
+            case 5:
+                return "devis refusé par le client";
+                break;
+            case 6:
+                return "devis refusé par le BU";
+                break;
+            default:
+                return "";
+                break;
+        }
     }
 }

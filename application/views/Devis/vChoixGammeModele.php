@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container bg-light h-100">
 
     <?php echo form_open('index.php/Devis/new'); ?>
     <div class="row pt-5">
