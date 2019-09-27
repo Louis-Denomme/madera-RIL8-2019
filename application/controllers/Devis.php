@@ -16,7 +16,7 @@ class Devis extends CI_Controller
 
         $this->load->view('parts/vHeader');
 
-        //TODO afficher page recap ?
+        redirect('index.php/Devis/recap/'.$idDevis);
 
         $this->load->view('parts/vFooter');
     }
@@ -40,10 +40,7 @@ class Devis extends CI_Controller
         //TODO load les gammes depuis la bdd
         $this->load->database();
         $query = $this->db->get('gamme');
-        $data =
-            [
-                'gammes' => []
-            ];
+        $data = ['gammes' => []];
 
         foreach ($query->result() as $row)
         {
@@ -54,7 +51,7 @@ class Devis extends CI_Controller
             $devis['idModele'] = $idModele;
             $this->session->set_userdata('devis', $devis);
             //Form rempli on doit redirect
-            redirect('index.php/Devis/config');
+            redirect('index.php/Devis/insert');
         } else if (!is_null($idGamme)) {
             $devis['idGamme'] = $idGamme;
             //TODO load les modèles depuis la bdd
@@ -106,7 +103,12 @@ class Devis extends CI_Controller
 
         //Ajout des modules du modèle de base
         $this->db->query('INSERT INTO devismodules (devismodules.idDevis, devismodules.idModule) SELECT '. $idDevis .', moduledansmodele.idModule FROM moduledansmodele WHERE moduledansmodele.idModele = '. $devis['idModele'] .';');
-        $this->recap($idDevis);
+        majPrixDev($idDevis);
+        redirect('index.php/Devis/config/'.$idDevis);
+    }
+
+    function majPrixDevis($idDevis){
+        $this->db->query('UPDATE devis SET devis.prixTotal = (SELECT SUM(composant.prix) FROM module INNER JOIN devismodules ON devismodules.idModule = module.id LEFT JOIN composantdansmodule ON composantdansmodule.idModule = module.id LEFT JOIN composant ON composantdansmodule.idComposant = composant.id WHERE devismodules.idDevis = '.$idDevis.') WHERE devis.id = '.$idDevis.');');
     }
 
     function edit($idDevis){
@@ -164,7 +166,7 @@ class Devis extends CI_Controller
 
         //TODO Chargement des modules pour le modèle selectionné et ajout au devis
         //$query = $this->db->get_where('moduledansmodele', array('idModele' => $devis["idModele"]));
-        $this->db->select('module.id, module.libelle');
+        $this->db->select('module.id, module.libelle, devismodules.id As num');
         $this->db->select_sum('composant.prix');
         $this->db->from('module');
         $this->db->join('devismodules', 'devismodules.idModule = module.id','INNER');
@@ -174,18 +176,12 @@ class Devis extends CI_Controller
         $this->db->group_by('module.id');
         $query = $this->db->get();
 
+        $devis = $this->db->get_where('devis', array('id' => $idDevis))->result()[0];
         //var_dump($query->result());
-
-        if (!array_key_exists('modules', $devis)) {
-            $num = 1;
-            $devis['modules'] = [];
-            $devis['prixTotal'] = 0;
-            foreach ($query->result() as $row)
-            {
-                array_push($devis['modules'], ['num' => $num, 'id' => $row->id , 'nom' => $row->libelle]);
-                $devis['prixTotal'] += $row->prix != null ? $row->prix : 0;
-                $num+=1;
-            }
+        $devisModules = array();
+        foreach ($query->result() as $row)
+        {
+            array_push($devisModules, ['num' => $row->num, 'id' => $row->id , 'nom' => $row->libelle]);
         }
 
         //TODO Chargement de la liste de tout les modules triés par types
@@ -199,12 +195,14 @@ class Devis extends CI_Controller
                     $data["modulesGroups"][$rowTypeModule->libelle] = [];
                 }
                 if($rowModuleGlobal->idTypeModule == $rowTypeModule->id){
-                    array_push($data["modulesGroups"][$rowTypeModule->libelle], ['id' => $rowModuleGlobal->id, 'nom' => $rowModuleGlobal->libelle]);
+                    array_push($data["modulesGroups"][$rowTypeModule->libelle], ['id' => $rowModuleGlobal->id, 'nom' => $rowModuleGlobal->libelle, 'ref' => $rowModuleGlobal->reference]);
                 }
             }
         }
+        //$devis->id= $idDevis;
         $data['devis'] = $devis;
-
+        $data['devisModules'] = $devisModules;
+        //var_dump($devis);
         $this->session->set_userdata('devis', $devis);
 
         $this->load->view('parts/vHeader');
@@ -213,11 +211,11 @@ class Devis extends CI_Controller
             'Devis/vChoixModules',
             $data
         );
-        var_dump($devis['prixTotal']);
+        //var_dump($devis);
         $this->load->view('parts/vFooter');
     }
 
-    function addModule()
+    function addModule($idDevis)
     {
         //checkLogin();
         $devis = $this->session->devis;
@@ -230,20 +228,22 @@ class Devis extends CI_Controller
         if (is_null($idModule))
             show_error('Pas d\'id module envoyé ?');
 
-        $numMax = 0;
-        foreach ($devis['modules'] as $module) {
-            if ($module['num'] > $numMax)
-                $numMax = $module['num'];
-        }
-
         //TODO load le module de la bdd et y ajouter le numMax
+        $newModule = array(
+            'idDevis' => $idDevis,
+            'idModule' => $idModule
+        );
+
+        $this->db->insert('devismodules', $newModule);
+        $this->majPrixDevis($devis->id);
+
         $moduleDeLaBdd = ['num' => ++$numMax, 'id' => $idModule, 'nom' => 'load depuis la bdd'];
 
-        $devis['modules'][] = $moduleDeLaBdd;
+        //$devis['modules'][] = $moduleDeLaBdd;
 
         $this->session->set_userdata('devis', $devis);
 
-        redirect('index.php/Devis/config');
+        redirect('index.php/Devis/config/'.$idDevis);
     }
 
     function editModule()
@@ -257,44 +257,29 @@ class Devis extends CI_Controller
         $numModule = $this->input->post('numModule');
         $idModule = $this->input->post('idModule');
 
-        if (is_null($idModule) || is_null($numModule))
-            show_error('Pas d\'id /num module envoyé ?');
+        //var_dump($devis);
+        $this->db->set('idModule', $idModule);
+        $this->db->where('id', $numModule);
+        $this->db->update('devismodules');
 
-        //TODO load le module de la bdd et y ajouter le numMax
-        $moduleDeLaBdd = ['id' => $idModule, 'nom' => 'load depuis la bdd'];
+        //$this->db->update('devismodules', array('id' => $numModule));
 
-        foreach ($devis['modules'] as &$module) {
-            if ($module['num'] == $numModule) {
-                $module = $moduleDeLaBdd;
-                $module['num'] = $numModule;
-                break;
-            }
-        }
-
-        $this->session->set_userdata('devis', $devis);
-
-        redirect('index.php/Devis/config');
+        redirect('index.php/Devis/config/'.$devis->id);
     }
+
 
     function delModule()
     {
+
         //checkLogin();
         $devis = $this->session->devis;
-
         $num = $this->input->get('num');
 
         if (is_null($num))
             show_error('num not set');
 
-        $index = 0;
-        foreach ($devis['modules'] as $module) {
-            if ($module['num'] == $num) {
-                break;
-            }
-            $index++;
-        }
-
-        array_splice($devis['modules'], $index, 1);
+        $this->db->delete('devismodules', array('id' => $num));
+        $this->majPrixDevis($devis->id);
 
         $this->session->set_userdata('devis', $devis);
 

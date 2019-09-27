@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div class="container-fluid h-100 d-flex flex-column bg-secondary">
+<div class="container-fluid d-flex flex-column bg-secondary">
     <div class="row bg-dark pt-2 pb-2">
         <div class="col-2">
             <div id="logo">

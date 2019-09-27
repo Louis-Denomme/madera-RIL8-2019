@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<div class="container bg-light h-100">
     <div class="row mt-5">
         <div class="col">
             <h2>Modules</h2>
         </div>
     </div>
-    <?php foreach ($devis['modules'] as $moduleDevis) { ?>
+    <?php foreach ($devisModules as $moduleDevis) { ?>
         <div class="row mt-3">
             <div class="col-11">
                 <?php echo form_open('index.php/Devis/editModule'); ?>
@@ -13,7 +13,7 @@
                     <?php foreach ($modulesGroups as $name => $modules) { ?>
                         <optgroup label="<?= $name ?>">
                             <?php foreach ($modules as $module) { ?>
-                                <option <?= $module['id'] == $moduleDevis['id'] ? 'selected' : '' ?> value="<?= $module['id'] ?>"><?= $module['nom'] ?></option>
+                                <option <?= $module['id'] == $moduleDevis['id'] ? 'selected' : '' ?> value="<?= $module['id'] ?>"><?= $module['nom'] ?> - <?= $module['ref'] ?></option>
                             <?php } ?>
                         </optgroup>
                     <?php } ?>
@@ -26,7 +26,7 @@
         </div>
     <?php } ?>
 
-    <?php echo form_open('index.php/Devis/addModule'); ?>
+    <?php echo form_open('index.php/Devis/addModule/'.$devis->id); ?>
     <div class="row mt-3">
         <div class="col">
             <select name="idModule" class="form-control" onchange="this.form.submit()">
@@ -34,7 +34,7 @@
                 <?php foreach ($modulesGroups as $name => $modules) { ?>
                     <optgroup label="<?= $name ?>">
                         <?php foreach ($modules as $module) { ?>
-                            <option value="<?= $module['id'] ?>"><?= $module['nom'] ?></option>
+                            <option value="<?= $module['id'] ?>"><?= $module['nom'] ?> - <?= $module['ref'] ?></option>
                         <?php } ?>
                     </optgroup>
                 <?php } ?>
@@ -45,7 +45,7 @@
 
     <div class="row mt-5">
         <div class="col text-left">
-            <span>Prix total : <?= $devis['prixTotal']; ?>€</span>
+            <span>Prix total : <?= $devis->prixTotal; ?>€</span>
         </div>
         <div class="col text-right">
             <a href="<?php echo base_url(); ?>index.php/Devis/insert" class="btn btn-success">Valider</a>
