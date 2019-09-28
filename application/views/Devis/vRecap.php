@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="row mt-10 pt-10 border-bottom border-dark">
-        <h2>Devis n° <?= $devis->id ?>
+        <h2><?php if($devis->etat == 4) { echo "Facture";}else{echo "Devis"; if($devis->etat == 3) { echo "validé"; }}?> n° <?= $devis->id ?>
             <span class="font-weight-light font-italic
             <?php if($devis->etat < 4){
                 echo "text-warning";
@@ -45,13 +45,17 @@
         </div>
     </div>
     <div class="container bg-dark mt-3 d-flex justify-content-around align-items-center fixed-bottom border border-dark" style="height: 60px;">
-        <button href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</button>
-        <button href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Imprimer</button>
-        <button type="button" class="btn btn-<?php if($devis->etat == 4){echo "primary";}else{echo "secondary";}?> btn-lg active" <?php if($devis->etat != 4){echo "disabled";}?>>Imprimer le dossier technique</button>
+        <?php if($devis->etat == 1) { ?>
+            <a href="<?php echo base_url(); ?>index.php/Devis/config/<?=$devis->id?>" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Modifier</a>
+        <?php } ?>
+        <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Imprimer</a>
+        <a type="button" class="btn btn-<?php if($devis->etat == 4){echo "primary";}else{echo "secondary";}?> btn-lg active" <?php if($devis->etat != 4){echo "disabled";}?>>Imprimer le dossier technique</a>
         <div>
             <?php if($devis->etat == 1 || $devis->etat == 3) { ?>
-            <button href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Valider</button>
-            <button href="#" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Refuser</button>
+                <a href="<?php echo base_url(); ?>index.php/Devis/changeState/<?=$devis->id?>" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Valider</a>
+                <a href="<?php echo base_url(); ?>index.php/Devis/refuseDevis/<?=$devis->id?>" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Refuser</a>
+            <?php } else if($devis->etat == 4) { ?>
+                <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Calendrier de paiement</a>
             <?php } else {?>
                 <button href="#" class="btn btn-light btn-lg" role="button" aria-pressed="false" disabled>Attente...</button>
             <?php } ?>

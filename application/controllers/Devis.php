@@ -173,8 +173,10 @@ class Devis extends CI_Controller
         $this->db->join('composantdansmodule','composantdansmodule.idModule = module.id','LEFT');
         $this->db->join('composant','composantdansmodule.idComposant = composant.id','LEFT');
         $this->db->where('devismodules.idDevis', $idDevis);
-        $this->db->group_by('module.id');
+        $this->db->group_by('devismodules.id, module.id');
+        //var_dump($this->db->get_compiled_select());
         $query = $this->db->get();
+
 
         $devis = $this->db->get_where('devis', array('id' => $idDevis))->result()[0];
         //var_dump($query->result());
@@ -201,6 +203,7 @@ class Devis extends CI_Controller
         }
         //$devis->id= $idDevis;
         $data['devis'] = $devis;
+        //var_dump($devisModules);
         $data['devisModules'] = $devisModules;
         //var_dump($devis);
         $this->session->set_userdata('devis', $devis);
@@ -213,6 +216,14 @@ class Devis extends CI_Controller
         );
         //var_dump($devis);
         $this->load->view('parts/vFooter');
+    }
+
+    function changeState($idDevis){
+        $devis = $this->db->get_where('devis', array('id' => $idDevis))->result()[0];
+        $this->db->set('etat', $devis->etat +1);
+        $this->db->where('id', $devis->id);
+        $this->db->update('devis');
+        redirect('index.php/Devis/recap/'.$idDevis);
     }
 
     function addModule($idDevis)

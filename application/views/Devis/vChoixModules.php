@@ -1,6 +1,7 @@
 <div class="container bg-light h-100">
     <div class="row mt-5">
         <div class="col">
+            <h1>Devis n° <?= $devis->id ?></h1>
             <h2>Modules</h2>
         </div>
     </div>
@@ -48,7 +49,7 @@
             <span>Prix total : <?= $devis->prixTotal; ?>€</span>
         </div>
         <div class="col text-right">
-            <a href="<?php echo base_url(); ?>index.php/Devis/insert" class="btn btn-success">Valider</a>
+            <a href="<?php echo base_url(); ?>index.php/Devis/recap/<?=$devis->id?>" class="btn btn-success">Valider</a>
         </div>
     </div>
 </div>
