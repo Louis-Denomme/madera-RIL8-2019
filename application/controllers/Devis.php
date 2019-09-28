@@ -103,12 +103,12 @@ class Devis extends CI_Controller
 
         //Ajout des modules du modèle de base
         $this->db->query('INSERT INTO devismodules (devismodules.idDevis, devismodules.idModule) SELECT '. $idDevis .', moduledansmodele.idModule FROM moduledansmodele WHERE moduledansmodele.idModele = '. $devis['idModele'] .';');
-        majPrixDev($idDevis);
+        $this->majPrixDevis($idDevis);
         redirect('index.php/Devis/config/'.$idDevis);
     }
 
     function majPrixDevis($idDevis){
-        $this->db->query('UPDATE devis SET devis.prixTotal = (SELECT SUM(composant.prix) FROM module INNER JOIN devismodules ON devismodules.idModule = module.id LEFT JOIN composantdansmodule ON composantdansmodule.idModule = module.id LEFT JOIN composant ON composantdansmodule.idComposant = composant.id WHERE devismodules.idDevis = '.$idDevis.') WHERE devis.id = '.$idDevis.');');
+        $this->db->query('UPDATE devis SET devis.prixTotal = (SELECT SUM(composant.prix) FROM module INNER JOIN devismodules ON devismodules.idModule = module.id LEFT JOIN composantdansmodule ON composantdansmodule.idModule = module.id LEFT JOIN composant ON composantdansmodule.idComposant = composant.id WHERE devismodules.idDevis = '.$idDevis.') WHERE devis.id = '.$idDevis.';');
     }
 
     function edit($idDevis){
@@ -284,7 +284,7 @@ class Devis extends CI_Controller
         $this->session->set_userdata('devis', $devis);
 
 
-        redirect('index.php/Devis/config');
+        redirect('index.php/Devis/config/'.$devis->id);
     }
 
     public function getEtatDevis($etat){
