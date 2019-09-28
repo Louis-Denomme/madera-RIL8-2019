@@ -1,7 +1,7 @@
 <?php
 
 
-class mDevis
+class mDevis extends CI_Model
 {
     private $id;
     private $idModel;
@@ -13,6 +13,33 @@ class mDevis
     private $createdAt;
     private $updatedBy;
     private $updatedAt;
+	
+	public function __construct() {
+		parent::__construct();
+		$this->_fields = [];
+		$this->_tblName = 'devis';
+	}
+	
+	/**
+	 * getAll devis
+	 * @return type
+	 */
+	public function getAll() {
+		$query = $this->db->get($this->_tblName);
+		$data = $query->result_array();
+		$query->free_result();
+		return $data;
+	}
+	
+	/**
+	 * Renvoi le nombre de devis par client
+	 * @param type $idClient
+	 */
+	public function getCountDevisByClient($idClient) {
+		$this->db->from($this->_tblName);
+		$this->db->where('idClient', $idClient);
+		return $this->db->count_all_results();
+	}
 
     /* Getters and setters */
     /**
