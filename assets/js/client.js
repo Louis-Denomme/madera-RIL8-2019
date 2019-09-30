@@ -1,6 +1,8 @@
 /* global base_url, Window, Tools */
 Client = {
-	openDialogAddOrUpdateNewClient: function (action, id) {
+	openDialogAddOrUpdateNewClient: function (action, id, event) {
+		event.preventDefault();
+		event.stopPropagation();
 		if(id !== undefined)
 			var url = base_url + 'index.php/Client/openDialogAddOrUpdateNewClient/' + action + '/' + id;
 		else 
