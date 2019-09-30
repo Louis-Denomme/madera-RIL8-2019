@@ -6,7 +6,7 @@
         <?= $viewAccepte ?>
     </div>
     <div class="col-6 bg-info">
-        <div class="container-fluid">
+        <div class="container-fluid p-2">
             <div class="row">
                 <div class="col">
                     <h2>Créer un devis</h2>
@@ -44,9 +44,9 @@
                 ?>
             <?php } else { ?>
                 <b>Aucun client.</b> <br/>
-                <b class="text-white underline-hover" onclick="Client.openDialogAddOrUpdateNewClient('add')">En ajouter
-                    un nouveau ?</b>
             <?php } ?>
+            <b class="text-white underline-hover" onclick="Client.openDialogAddOrUpdateNewClient('add')">En ajouter
+                un nouveau ?</b>
         </div>
 
     </div>

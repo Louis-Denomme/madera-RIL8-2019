@@ -31,3 +31,24 @@ body {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.cercle{
+	margin-top: 15px;
+	margin-left: 5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 20px;
+	background: gray;
+}
+
+.cercle-orange{
+	background-color: orange;
+}
+
+.cercle-green{
+	background-color: green;
+}
+
+.cercle-red{
+	background-color: red;
+}

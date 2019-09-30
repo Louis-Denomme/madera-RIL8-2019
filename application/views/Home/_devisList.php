@@ -1,5 +1,6 @@
 <div class="container-fluid p-2">
     <div class="row">
+        <div class="cercle <?php if($etat == 1){echo "cercle-orange";}elseif ($etat == 2){echo "cercle-green";}elseif ($etat == 3){echo "cercle-red";}?>"></div>
         <div class="col">
             <h2><?= $title ?></h2>
         </div>
