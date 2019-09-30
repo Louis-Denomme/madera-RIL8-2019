@@ -60,3 +60,16 @@ body {
 .cercle-red{
 	background-color: red;
 }
+
+li{
+	list-style-type: '🡲';
+}
+
+.linkDevis{
+	color: white;
+}
+
+.linkDevis:hover{
+	color: #007bff;
+	text-decoration: none;
+}
