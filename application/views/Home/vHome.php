@@ -1,4 +1,4 @@
-<div class="row flex-fill" style="overflow-x: hidden">
+<div class="container flex-fill" style="overflow-x: hidden">
     <div class="card col-12" style="margin: 5px">
         <div class="card-body">
             <h5 class="card-header">Accueil - Devis</h5>
@@ -38,7 +38,14 @@
             </div>
         </div>
         <div class="card-footer">
-            <b>Enregister un nouveau devis ?</b>
+            <div class="container row">
+                <div class="col-6"><b>Enregister un nouveau devis ?</b></div>
+                <div class="col-6 d-flex justify-content-end"><button class="btn btn-primary btn-sm" onclick="Client.openDialogAddOrUpdateNewClient('add', event)">
+                    Ajouter un nouveau
+                    client ?
+                </button>
+                </div>
+            </div>
             <br/>
             <?php if (!empty($clients)) { ?>
                 <?php
@@ -65,10 +72,7 @@
                 echo form_close();
                 ?>
                 <br/>
-                <button class="btn btn-primary btn-sm" onclick="Client.openDialogAddOrUpdateNewClient('add', event)">
-                    Ajouter un nouveau
-                    client ?
-                </button>
+
             <?php } else { ?>
                 <b>Aucun client.</b> <br/>
             <?php } ?>
