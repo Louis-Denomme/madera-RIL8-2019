@@ -59,7 +59,11 @@ class Home extends CI_Controller
             'viewEnAttente' => $viewEnAttente,
             'viewAccepte' => $viewAccepte,
             'viewRefuse' => $viewRefuse,
-            'clients' => $clients
+            'clients' => $clients,
+            'tableAttente' => $tableAttente,
+            'tableRefuse' => $tableRefuse,
+            'tableValide' => $tableValide
+
         ];
 
         $this->load->view('Home/vHome', $data);

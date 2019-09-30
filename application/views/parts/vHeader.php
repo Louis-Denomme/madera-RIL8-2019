@@ -21,8 +21,8 @@
     <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
     <script>"use strict";
         var base_url = "<?= base_url(); ?>";</script>
-    <script src="<?= base_url() ?>assets/js/home.js"></script>
     <script src="<?= base_url() ?>assets/js/client.js"></script>
+    <script src="<?= base_url() ?>assets/js/parameter.js"></script>
     <script src="<?= base_url() ?>assets/js/tools.js"></script>
 
 </head>
@@ -46,7 +46,7 @@
         <?php if (isLogedIn()) { ?>
             <div id="nav" class="col-5 text-left">
                 <div class="text-left">
-                    <a class="btn btn-dark" href="#">Modalité de paiement</a>
+                    <a class="btn btn-dark" href="<?php echo base_url() ?>index.php/cParameter">Parametres</a>
                     <a class="btn btn-dark" href="#">Configuration</a>
                     <a class="btn btn-dark" href="<?php echo base_url() ?>index.php/cMyAccount">Mon Compte</a>
                 </div>
