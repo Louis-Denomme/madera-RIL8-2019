@@ -1,4 +1,4 @@
-<div class="container bg-light h-100">
+<div class="container bg-light h-100 overflow-auto">
     <div class="row mt-5">
         <div class="col">
             <h1>Devis n° <?= $devis->id ?></h1>
