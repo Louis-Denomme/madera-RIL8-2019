@@ -52,7 +52,9 @@ class mDevis extends CI_Model
      */
     public function getAllByEtat($ETAT)
     {
-        $this->db->select();
+        $this->db->select($this->_tblName . '.*');
+        $this->db->select('modele.libelle as libelle');
+        $this->db->select('client.nom as nom');
         $this->db->from($this->_tblName);
         $this->db->join('client', 'idClient = client.id');
         $this->db->join('modele', 'idModele = modele.id');
