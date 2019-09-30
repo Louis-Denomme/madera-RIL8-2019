@@ -11,6 +11,7 @@ Client = {
 			url: url,
 			success: function (html) {
 				if (html.length > 0) {
+					console.log()
 					$('#MODAL-AJOUT-CLIENT').appendTo('body');
 					$('#MODAL-AJOUT-CLIENT').html(html);
 					$('#MODAL-AJOUT-CLIENT').modal();

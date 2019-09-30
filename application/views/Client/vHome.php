@@ -2,7 +2,7 @@
 <h1 class="">Clients <br/><small class="text-muted">Récapitulatif</small></h1>
 <br/>
 <div class="container">
-	<? if(!empty($clients)) {?>
+	<?php if(!empty($clients)) {?>
 	<div class="row">
 		<button class="btn btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('add')"> Ajouter un nouveau client</button>
 	</div>
@@ -20,7 +20,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<? foreach($clients as $c) { ?>
+				<?php foreach($clients as $c) { ?>
 				<tr>
 					<td><?= $c['nom'] ?></td>
 					<td><?= $c['email'] ?></td>
@@ -32,11 +32,11 @@
 						<button class="btn btn-sm btn-danger" onclick="Client.deleteClient(<?= $c['id'] ?>)">Supprimer</button>
 					</td>
 				</tr>
-				<? } ?>
+				<?php } ?>
 			</tbody>
 		</table>
 	</div>
-	<? } else { ?>
+	<?php } else { ?>
 	<div class="row flex">
 		<div class="col" style="text-align: center">
 			<h2>Aucun client connu. Veuillez ajouter un nouveau client</h2>
@@ -48,5 +48,5 @@
 			<button class="btn btn-lg btn-primary" onclick="Client.openDialogAddOrUpdateNewClient('add')"> Ajouter un nouveau client</button>
 		</div>
 	</div>
-	<? }?>
+	<?php }?>
 </div>
