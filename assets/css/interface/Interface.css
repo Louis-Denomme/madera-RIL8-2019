@@ -39,3 +39,24 @@ body {
 .table-hover tr:hover {
 	background-color: rgba(0, 86, 179, 0.53) !important;
 }
+
+.cercle{
+	margin-top: 15px;
+	margin-left: 5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 20px;
+	background: gray;
+}
+
+.cercle-orange{
+	background-color: orange;
+}
+
+.cercle-green{
+	background-color: green;
+}
+
+.cercle-red{
+	background-color: red;
+}

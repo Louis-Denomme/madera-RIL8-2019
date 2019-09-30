@@ -28,6 +28,7 @@ class Home extends CI_Controller
         $viewEnAttente = $this->load->view(
             'Home/_devisList',
             [
+                'etat' => 1,
                 'title' => 'Devis en attente de validation client',
                 'devisList' => $tableAttente
             ],
@@ -36,6 +37,7 @@ class Home extends CI_Controller
         $viewAccepte = $this->load->view(
             'Home/_devisList',
             [
+                'etat' => 2,
                 'title' => 'Devis acceptés',
                 'devisList' => $tableValide
             ],
@@ -44,6 +46,7 @@ class Home extends CI_Controller
         $viewRefuse = $this->load->view(
             'Home/_devisList',
             [
+                'etat' => 3,
                 'title' => 'Devis refusés',
                 'devisList' => $tableRefuse
             ],
