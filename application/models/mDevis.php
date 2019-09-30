@@ -13,33 +13,59 @@ class mDevis extends CI_Model
     private $createdAt;
     private $updatedBy;
     private $updatedAt;
-	
-	public function __construct() {
-		parent::__construct();
-		$this->_fields = [];
-		$this->_tblName = 'devis';
-	}
-	
-	/**
-	 * getAll devis
-	 * @return type
-	 */
-	public function getAll() {
-		$query = $this->db->get($this->_tblName);
-		$data = $query->result_array();
-		$query->free_result();
-		return $data;
-	}
-	
-	/**
-	 * Renvoi le nombre de devis par client
-	 * @param type $idClient
-	 */
-	public function getCountDevisByClient($idClient) {
-		$this->db->from($this->_tblName);
-		$this->db->where('idClient', $idClient);
-		return $this->db->count_all_results();
-	}
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_fields = [];
+        $this->_tblName = 'devis';
+    }
+
+    /**
+     * getAll devis
+     * @return type
+     */
+    public function getAll()
+    {
+        $query = $this->db->get($this->_tblName);
+        $data = $query->result_array();
+        $query->free_result();
+        return $data;
+    }
+
+    /**
+     * Renvoi le nombre de devis par client
+     * @param type $idClient
+     * @return
+     */
+    public function getCountDevisByClient($idClient)
+    {
+        $this->db->from($this->_tblName);
+        $this->db->where('idClient', $idClient);
+        return $this->db->count_all_results();
+    }
+
+    /**
+     * Renvoi les devis d'un état particulier
+     * @param $ETAT
+     * @return mixed
+     */
+    public function getAllByEtat($ETAT)
+    {
+        $this->db->select();
+        $this->db->from($this->_tblName);
+        $this->db->join('client', 'idClient = client.id');
+        $this->db->join('modele', 'idModele = modele.id');
+        if (is_array($ETAT)) {
+            $this->db->where_in('etat', $ETAT);
+        } else {
+            $this->db->where('etat', $ETAT);
+        }
+        $query = $this->db->get();
+        $data = $query->result_array();
+        $query->free_result();
+        return $data;
+    }
 
     /* Getters and setters */
     /**

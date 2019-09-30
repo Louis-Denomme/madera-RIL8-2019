@@ -20,28 +20,10 @@ class Home extends CI_Controller
     {
         $this->load->view('parts/vHeader');
 
-        //TODO recup les différentes listes depuis la bdd et faire les liens dans l'UI vers la page d'edition
-        $this->db->select('devis.id, devis.etat, client.nom');
-        $this->db->from('devis');
-        $this->db->join('client', 'devis.idClient = client.id','INNER');
-        $query = $this->db->get();
+        $tableAttente = $this->devis->getAllByEtat([1, 3]);
+        $tableValide = $this->devis->getAllByEtat(4);
+        $tableRefuse = $this->devis->getAllByEtat(5);
 
-        //var_dump($query->result());
-
-        $tableAttente = array();
-        $tableValide = array();
-        $tableRefuse = array();
-
-        foreach ($query->result() as $row){
-            //var_dump($row);
-            if ($row->etat == 1 || $row->etat == 3){
-                array_push($tableAttente, $row->id);
-            }else if($row->etat == 4){
-                array_push($tableValide, $row->id);
-            }else if($row->etat == 5){
-                array_push($tableRefuse, $row->id);
-            }
-        }
 
         $viewEnAttente = $this->load->view(
             'Home/_devisList',

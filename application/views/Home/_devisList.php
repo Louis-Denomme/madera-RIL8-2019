@@ -1,17 +1,45 @@
-<div class="container-fluid p-2">
-    <div class="row">
-        <div class="cercle <?php if($etat == 1){echo "cercle-orange";}elseif ($etat == 2){echo "cercle-green";}elseif ($etat == 3){echo "cercle-red";}?>"></div>
-        <div class="col">
-            <h2><?= $title ?></h2>
-        </div>
-    </div>
-    <div class="row border p-3 overflow-auto">
-        <div class="col">
-            <ul>
-                <?php foreach ($devisList as $devis) { ?>
-                    <li><a class="linkDevis" href="<?= base_url() ?>index.php/devis/recap/<?=$devis ?>">Devis <?= $devis ?></a></li>
-                <?php } ?>
-            </ul>
-        </div>
-    </div>
-</div>
+<?php if (!empty($devisList)) { ?>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                Numéro
+            </th>
+            <th>
+                Date de création
+            </th>
+            <th>
+                Client
+            </th>
+
+            <th>
+               Modèle
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($devisList as $devis) { ?>
+            <tr onclick="location.href='<?= base_url() ?>index.php/devis/recap/<?= $devis['id'] ?>'"
+                style="cursor: pointer">
+                <td>
+                    <?= $devis['id'] ?>
+                </td>
+                <td>
+                    <?= dateSql2fr($devis['dateCreation']) ?>
+                </td>
+                <td>
+                    <?= $devis['nom'] ?>
+                </td>
+                <td>
+                    <?= $devis['libelle'] ?>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php } else { ?>
+    <br/>
+    <p>
+        <b>Aucun devis de ce type pour le moment...</b>
+    </p>
+<?php } ?>

@@ -21,6 +21,7 @@
     <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
     <script>"use strict";
         var base_url = "<?= base_url(); ?>";</script>
+    <script src="<?= base_url() ?>assets/js/home.js"></script>
     <script src="<?= base_url() ?>assets/js/client.js"></script>
     <script src="<?= base_url() ?>assets/js/tools.js"></script>
 
