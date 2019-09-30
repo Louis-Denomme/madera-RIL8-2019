@@ -31,3 +31,11 @@ body {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.text-white.active {
+	color: #0056b3 !important;
+}
+
+.table-hover tr:hover {
+	background-color: rgba(0, 86, 179, 0.53) !important;
+}
