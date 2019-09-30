@@ -2,25 +2,28 @@
     <div class="card col-12" style="margin: 5px">
         <div class="card-body">
             <h5 class="card-header">Accueil - Devis</h5>
-            <div class="card-body" style="max-height:22rem; overflow-y: auto;" >
+            <div class="card-body" style="max-height:22rem; overflow-y: auto;">
                 <ul class="nav nav-tabs col-12" id="tabs-home" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#devis-attente"
                            role="tab"
                            aria-controls="home"
                            aria-selected="true">Devis en attente de validation</a>
+                        <span class="bubble orange"><?= count($tableAttente) ?></span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#devis-refuse"
                            role="tab"
                            aria-controls="profile"
                            aria-selected="false">Devis refusés</a>
+                        <span class="bubble red"><?= count($tableRefuse) ?></span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#devis-accepte"
                            role="tab"
                            aria-controls="contact"
                            aria-selected="false">Devis acceptés</a>
+                        <span class="bubble green"><?= count($tableValide) ?></span>
                     </li>
                 </ul>
                 <div class="tab-content col-12">
