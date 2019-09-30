@@ -1,0 +1,33 @@
+html,
+body {
+	height: 100%;
+}
+
+#logo {
+	font-family: "Noto Sans", sans-serif;
+	font-weight: bold;
+	font-size: large;
+	letter-spacing: 5px;
+	color: white;
+}
+
+#blocDevisAcceptes {
+	background-color: #7fba00;
+}
+
+#blocDevisEncours {
+	background-color: #f25022;
+}
+
+#blocDevisRefuses {
+	background-color: #00a4ef;
+}
+
+#blocNavigationRapide {
+	background-color: #ffb900;
+}
+
+.underline-hover:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
