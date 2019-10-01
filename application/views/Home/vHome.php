@@ -1,4 +1,4 @@
-<div class="container flex-fill" style="overflow-x: hidden">
+<div class="contaiopenDialogAddOrUpdateNewClientner flex-fill" style="overflow-x: hidden">
     <div class="card col-12" style="margin: 5px">
         <div class="card-body">
             <h5 class="card-header">Accueil - Devis</h5>
@@ -43,7 +43,7 @@
         <div class="card-footer">
             <div class="container row">
                 <div class="col-6"><b>Enregister un nouveau devis ?</b></div>
-                <div class="col-6 d-flex justify-content-end"><button class="btn btn-primary btn-sm" onclick="Client.openDialogAddOrUpdateNewClient('add', event)">
+                <div class="col-6 d-flex justify-content-end"><button class="btn btn-primary btn-sm" onclick="Client.openDialogAddOrUpdateNewClient('add')">
                     Ajouter un nouveau
                     client ?
                 </button>
